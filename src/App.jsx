@@ -21,11 +21,16 @@ function App() {
       setCart([...cart, item]);
     }
   }
+    function removeFromCart(id) {
+      setCart(prevCart => prevCart.filter(guitar => guitar.id !== id));//filter obtiene el objeto guitar y lo compara con el id que se le pasa, si es diferente lo mantiene en el carrito y si es igual lo elimina
+    }
+  
 
   return (
     <Fragment>
       <Header 
         cart={cart}
+        removeFromCart={removeFromCart}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Coleccion</h2>
