@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity }) {
+export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart }) {
   // State derivado
   const isEmpty = useMemo(() => cart.length === 0, [cart]); 
   //useMemo hace que la aplicación no haga renders innecesarios hasta que cambie su segundo parámetro, o sea cart
@@ -90,7 +90,10 @@ export default function Header({ cart, removeFromCart, increaseQuantity, decreas
                       </p>
                     </>
                   )}
-                  <button className="btn btn-dark w-100 mt-3 p-2">
+                  <button 
+                    className="btn btn-dark w-100 mt-3 p-2"
+                    onClick={clearCart}
+                    >
                     Vaciar Carrito
                   </button>
                 </div>

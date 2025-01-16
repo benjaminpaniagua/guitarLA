@@ -6,8 +6,18 @@ import Footer from "./components/Footer";
 
 import { Fragment } from "react";
 function App() {
-  const [data, setData] = useState(db);
-  const [cart, setCart] = useState([]);
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem("cart") // localStorage obtiene el valor del objeto cart del useEffect
+    return localStorageCart ? JSON.parse(localStorageCart) : []; //si hay algo en localStorage lo parsea, si no hay nada devuelve un array vacio
+  }
+
+  const [data] = useState(db);
+  const [cart, setCart] = useState(initialCart);
+
+  useEffect(() => { //para tener sincronizado el cart con el localStorage
+    localStorage.setItem("cart", JSON.stringify(cart)); // toma dos parametros, el nombre del objeto y el objeto que se va a guardar y hace que funcione de inmediato
+  }, [cart])
+
   const MAX_QUANTITY = 5;
   const MIN_QUANTITY = 1;
 
@@ -58,6 +68,10 @@ function App() {
       setCart(updatedCart);
     }
 
+    function clearCart() {
+      setCart([]);
+    }
+
 
   return (
     <Fragment>
@@ -66,6 +80,7 @@ function App() {
         removeFromCart={removeFromCart}
         increaseQuantity={increaseQuantity}
         decreaseQuantity={decreaseQuantity}
+        clearCart={clearCart}
       />
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Coleccion</h2>
